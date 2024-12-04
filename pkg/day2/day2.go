@@ -1,4 +1,4 @@
-package day1
+package day2
 
 import (
 	"slices"
@@ -12,24 +12,20 @@ func Solve(filename string) int {
 	left := arrays[0]
 	right := arrays[1]
 
-	slices.Sort(left)
 	slices.Sort(right)
 
-	for i := range left {
-		l := left[i]
-		r := right[i]
+	rightDict := make(map[int]int)
 
-		if l <= r {
-			left[i] = r - l
-		} else {
-			left[i] = l - r
-		}
+	for i := range right {
+		rightDict[right[i]] = rightDict[right[i]] + 1
 	}
 
 	sum := 0
 
 	for i := range left {
-		sum += left[i]
+		l := left[i]
+
+		sum += l * rightDict[l]
 	}
 
 	return sum

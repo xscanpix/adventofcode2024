@@ -1,5 +1,3 @@
-GO_FILES = $(shell find . -name \*.go)
-
 test:
 	@go test \
 		-shuffle=on \
@@ -12,3 +10,7 @@ test:
 day1:
 	@cd ./cmd/day1 && go run .
 .PHONY: day1
+
+day2:
+	@cd ./cmd/day2 && go run .
+.PHONY: day2
