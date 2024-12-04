@@ -4,10 +4,9 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
-
-	"github.com/xscanpix/adventofcode2024/internal/utils"
 )
 
 func Solve(filename string) int {
@@ -21,32 +20,48 @@ func Solve(filename string) int {
 
 	scanner := bufio.NewScanner(file)
 
-	// Store the sums of the two lists
-	var leftSum int
-	var rightSum int
+	var left []int
+	var right []int
 
-	// Iterate the input file,
-	// split, convert, and sum the numbers
 	for scanner.Scan() {
 		var values = strings.Split(scanner.Text(), "   ")
 
-		left, err := strconv.Atoi(values[0])
+		leftVal, err := strconv.Atoi(values[0])
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		leftSum += left
+		left = append(left, leftVal)
 
-		right, err := strconv.Atoi(values[1])
+		rightVal, err := strconv.Atoi(values[1])
 
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		rightSum += right
+		right = append(right, rightVal)
 	}
 
-	// Return the absolute difference of the sums
-	return utils.IntAbs(leftSum - rightSum)
+	slices.Sort(left)
+	slices.Sort(right)
+
+	for i := range left {
+		l := left[i]
+		r := right[i]
+
+		if l <= r {
+			left[i] = r - l
+		} else {
+			left[i] = l - r
+		}
+	}
+
+	sum := 0
+
+	for i := range left {
+		sum += left[i]
+	}
+
+	return sum
 }
