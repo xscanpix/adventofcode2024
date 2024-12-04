@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-func SplitFileFromFilename(filename string, separator string, columns int) *[][]int {
+func SplitFileIntoColumnsFromFilename(filename string, separator string, columns int) *[][]int {
 	file, err := os.Open(filename)
 
 	if err != nil {
@@ -18,10 +18,10 @@ func SplitFileFromFilename(filename string, separator string, columns int) *[][]
 
 	defer file.Close()
 
-	return SplitFileFromReader(file, separator, columns)
+	return SplitFileIntoColumnsFromReader(file, separator, columns)
 }
 
-func SplitFileFromReader(r io.Reader, separator string, columns int) *[][]int {
+func SplitFileIntoColumnsFromReader(r io.Reader, separator string, columns int) *[][]int {
 	scanner := bufio.NewScanner(r)
 
 	result := make([][]int, columns)

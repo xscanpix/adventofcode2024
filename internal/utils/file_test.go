@@ -6,7 +6,7 @@ import (
 	"testing/fstest"
 )
 
-func TestSplitFileIntoIntArrays(t *testing.T) {
+func TestSplitFileIntoColumns(t *testing.T) {
 	var expect = [][]int{
 		{
 			3, 4, 2, 1, 3, 3,
@@ -27,7 +27,7 @@ func TestSplitFileIntoIntArrays(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	result := *SplitFileFromReader(file, "   ", 2)
+	result := *SplitFileIntoColumnsFromReader(file, "   ", 2)
 
 	if !reflect.DeepEqual(result, expect) {
 		t.Fatal("Error")

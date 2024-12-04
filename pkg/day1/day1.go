@@ -7,7 +7,7 @@ import (
 )
 
 func Solve1(filename string) int {
-	arrays := utils.SplitFileFromFilename(filename, "   ", 2)
+	arrays := utils.SplitFileIntoColumnsFromFilename(filename, "   ", 2)
 
 	left := &(*arrays)[0]
 	right := &(*arrays)[1]
@@ -37,7 +37,7 @@ func Solve1(filename string) int {
 
 func Solve2(filename string) int {
 	// Setup code
-	arrays := utils.SplitFileFromFilename(filename, "   ", 2)
+	arrays := utils.SplitFileIntoColumnsFromFilename(filename, "   ", 2)
 
 	left := &(*arrays)[0]
 	right := &(*arrays)[1]
