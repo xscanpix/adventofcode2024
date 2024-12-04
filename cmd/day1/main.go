@@ -7,5 +7,6 @@ import (
 )
 
 func main() {
-	log.Printf(`Day1 result: %d`, day1.Solve("input.txt"))
+	log.Printf(`Day1 result 1: %d`, day1.Solve1("input.txt"))
+	log.Printf(`Day1 result 2: %d`, day1.Solve2("input.txt"))
 }
