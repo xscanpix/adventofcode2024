@@ -8,3 +8,7 @@ test:
 		-timeout=5m \
 		./...
 .PHONY: test
+
+day1:
+	@cd ./cmd/day1 && go run .
+.PHONY: day1
