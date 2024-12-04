@@ -21,9 +21,12 @@ func Solve(filename string) int {
 
 	scanner := bufio.NewScanner(file)
 
+	// Store the sums of the two lists
 	var leftSum int
 	var rightSum int
 
+	// Iterate the input file,
+	// split, convert, and sum the numbers
 	for scanner.Scan() {
 		var values = strings.Split(scanner.Text(), "   ")
 
@@ -44,5 +47,6 @@ func Solve(filename string) int {
 		rightSum += right
 	}
 
+	// Return the absolute difference of the sums
 	return utils.IntAbs(leftSum - rightSum)
 }
