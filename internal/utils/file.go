@@ -42,3 +42,41 @@ func SplitFileIntoColumnsFromReader(r io.Reader, separator string, columns int) 
 
 	return &result
 }
+
+func SplitFileIntoRowsFromFilename(filename string, separator string) *[][]int {
+	file, err := os.Open(filename)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer file.Close()
+
+	return SplitFileIntoRowsFromReader(file, separator)
+}
+
+func SplitFileIntoRowsFromReader(r io.Reader, separator string) *[][]int {
+	scanner := bufio.NewScanner(r)
+
+	result := make([][]int, 0)
+
+	for scanner.Scan() {
+		split := strings.Split(scanner.Text(), separator)
+
+		values := make([]int, 0)
+
+		for i := range len(split) {
+			val, err := strconv.Atoi(split[i])
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			values = append(values, val)
+		}
+
+		result = append(result, values)
+	}
+
+	return &result
+}
