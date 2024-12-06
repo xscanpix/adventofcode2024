@@ -32,9 +32,7 @@ func compare_level_pairs(report *[]int, pair1 *pair, pair2 *pair) bool {
 	return false
 }
 
-func Solve1(filename string) int {
-	reports := *utils.SplitFileIntoRowsFromFilename(filename, " ")
-
+func Solve1(reports [][]int) int {
 	safe_report_count := 0
 	for _, report := range reports {
 		// Assume safe
@@ -82,9 +80,7 @@ func find_unsafe_index(levels []int) int {
 	return -1
 }
 
-func Solve2(filename string) int {
-	reports := *utils.SplitFileIntoRowsFromFilename(filename, " ")
-
+func Solve2(reports [][]int) int {
 	safe_report_count := 0
 	for _, report := range reports {
 		unsafe_index := find_unsafe_index(report)
