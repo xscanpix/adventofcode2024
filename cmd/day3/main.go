@@ -15,4 +15,5 @@ func main() {
 	}
 
 	log.Printf(`Day3 result 1: %d`, day3.Solve1(string(text)))
+	log.Printf(`Day3 result 2: %d`, day3.Solve2(string(text)))
 }

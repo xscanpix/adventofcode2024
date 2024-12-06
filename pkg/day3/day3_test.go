@@ -15,5 +15,11 @@ func TestSolve1(t *testing.T) {
 }
 
 func TestSolve2(t *testing.T) {
+	input := "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
 
+	expect := 48
+
+	if result := Solve2(input); result != expect {
+		t.Fatalf(`Expected %d, got %d`, expect, result)
+	}
 }

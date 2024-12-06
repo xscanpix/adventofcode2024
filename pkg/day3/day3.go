@@ -4,9 +4,10 @@ import (
 	"log"
 	"regexp"
 	"strconv"
+	"strings"
 )
 
-func Solve1(input string) int {
+func do_calc(input string) int {
 	reg, err := regexp.Compile(`mul\((\d{1,3}),(\d{1,3})\)`)
 
 	if err != nil {
@@ -34,6 +35,42 @@ func Solve1(input string) int {
 		sum = sum + mul
 
 		input = input[index[1]:]
+	}
+
+	return sum
+}
+
+func Solve1(input string) int {
+	return do_calc(input)
+}
+
+func Solve2(input string) int {
+	enabled := true
+	sum := 0
+
+	for {
+		if enabled {
+			index := strings.Index(input, "don't()")
+
+			if index < 0 {
+				sum += do_calc(input)
+				break
+			} else {
+				sum += do_calc(input[:index])
+			}
+
+			input = input[index+7:]
+			enabled = false
+		} else {
+			index := strings.Index(input, "do()")
+
+			if index < 0 {
+				break
+			}
+
+			input = input[index+4:]
+			enabled = true
+		}
 	}
 
 	return sum
