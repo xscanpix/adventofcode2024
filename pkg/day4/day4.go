@@ -1,5 +1,9 @@
 package day4
 
+import (
+	"github.com/xscanpix/adventofcode2024/internal/utils"
+)
+
 type Input struct {
 	Data    *string
 	Rows    int
@@ -76,6 +80,23 @@ func Solve1(input Input, word string) int {
 	return count
 }
 
-func Solve2(input string) int {
-	return 0
+func Solve2(input Input, word string) int {
+	reverse := utils.Reverse(word)
+
+	count := 0
+
+	for i, s := range *input.Data {
+		row, col := getCoordsFromIndex(input, i)
+
+		if s == 'A' {
+			diag1 := getCharFromInput(input, row-1, col-1) + getCharFromInput(input, row, col) + getCharFromInput(input, row+1, col+1)
+			diag2 := getCharFromInput(input, row+1, col-1) + getCharFromInput(input, row, col) + getCharFromInput(input, row-1, col+1)
+
+			if (diag1 == word || diag1 == reverse) && (diag2 == word || diag2 == reverse) {
+				count++
+			}
+		}
+	}
+
+	return count
 }
