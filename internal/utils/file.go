@@ -13,7 +13,7 @@ func SplitFileIntoColumnsFromFilename(filename string, separator string, columns
 	file, err := os.Open(filename)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf(`Error reading '%s'. Make sure it exists.`, filename)
 	}
 
 	defer file.Close()
@@ -47,7 +47,7 @@ func SplitFileIntoRowsFromFilename(filename string, separator string) *[][]int {
 	file, err := os.Open(filename)
 
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf(`Error reading '%s'. Make sure it exists.`, filename)
 	}
 
 	defer file.Close()
