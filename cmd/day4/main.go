@@ -27,6 +27,6 @@ func main() {
 		Rows:    lineCount + 1,
 	}
 
-	log.Printf(`Day3 result 1: %d`, day4.Solve1(input, "XMAS"))
-	log.Printf(`Day3 result 2: %d`, day4.Solve2(input, "MAS"))
+	log.Printf(`Day4 result 1: %d`, day4.Solve1(input, "XMAS"))
+	log.Printf(`Day4 result 2: %d`, day4.Solve2(input, "MAS"))
 }
