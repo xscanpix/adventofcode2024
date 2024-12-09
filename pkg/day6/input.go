@@ -12,6 +12,21 @@ type Grid struct {
 	Height int
 }
 
+func (g *Grid) Copy() Grid {
+	data := make([][]byte, len(g.Data))
+
+	for i := range g.Data {
+		data[i] = make([]byte, len(g.Data[i]))
+		copy(data[i], g.Data[i])
+	}
+
+	return Grid{
+		Data:   data,
+		Width:  g.Width,
+		Height: g.Height,
+	}
+}
+
 type Input struct {
 	Grid   Grid
 	StartX int

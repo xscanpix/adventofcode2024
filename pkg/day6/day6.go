@@ -1,5 +1,9 @@
 package day6
 
+import (
+	"github.com/xscanpix/adventofcode2024/internal/utils"
+)
+
 const (
 	up    = 0
 	right = 1
@@ -7,82 +11,138 @@ const (
 	left  = 3
 )
 
-func nextByte(grid Grid, x, y, dir int) byte {
+func nextByte(grid Grid, pos utils.Pair, dir int) byte {
 	switch dir {
 	case up:
 		{
-			return grid.Data[y-1][x]
+			return grid.Data[pos.Y()-1][pos.X()]
 		}
 	case down:
 		{
-			return grid.Data[y+1][x]
+			return grid.Data[pos.Y()+1][pos.X()]
 		}
 	case left:
 		{
-			return grid.Data[y][x-1]
+			return grid.Data[pos.Y()][pos.X()-1]
 		}
 	case right:
 		{
-			return grid.Data[y][x+1]
+			return grid.Data[pos.Y()][pos.X()+1]
 		}
 	}
 
 	panic("unreachable")
 }
 
-func isNextObstacle(grid Grid, x, y, dir int) bool {
-	nextByte := nextByte(grid, x, y, dir)
+func isNextObstacle(grid Grid, pos utils.Pair, dir int) bool {
+	nextByte := nextByte(grid, pos, dir)
 
 	return nextByte == '#'
 
 }
 
-func Solve1(input Input) int {
-	touched := 0
+func simulate(input Input) ([]utils.Pair, bool) {
+	path := []utils.Pair{}
+	obstacles := []utils.Pair{}
 
-	x := input.StartX
-	y := input.StartY
+	currentPos := utils.NewPair(input.StartX, input.StartY)
 
 	dir := up
 
 	for {
-		if input.Grid.Data[y][x] != 'X' {
-			touched++
-			input.Grid.Data[y][x] = 'X'
+		if input.Grid.Data[currentPos.Y()][currentPos.X()] != 'X' {
+			input.Grid.Data[currentPos.Y()][currentPos.X()] = 'X'
+			path = append(path, currentPos.Copy())
 		}
 
-		if x <= 0 || x >= input.Grid.Width-1 || y <= 0 || y >= input.Grid.Height-1 {
+		if currentPos.X() <= 0 || currentPos.X() >= input.Grid.Width-1 || currentPos.Y() <= 0 || currentPos.Y() >= input.Grid.Height-1 {
 			break
 		}
 
-		if isNextObstacle(input.Grid, x, y, dir) {
+		obstacle := false
+		if isNextObstacle(input.Grid, currentPos, dir) {
+			for i := len(obstacles) - 1; i >= 0; i-- {
+				if len(obstacles) > 4 {
+					if obstacles[i].X() == currentPos.X() && obstacles[i].Y() == currentPos.Y() {
+						return path, true
+					}
+				}
+			}
+
+			obstacle = true
 			dir = (dir + 1) % 4
+		}
+
+		if obstacle && isNextObstacle(input.Grid, currentPos, dir) {
+			for i := len(obstacles) - 1; i >= 0; i-- {
+				if len(obstacles) > 4 {
+					if obstacles[i].X() == currentPos.X() && obstacles[i].Y() == currentPos.Y() {
+						return path, true
+					}
+				}
+			}
+
+			obstacle = true
+			dir = (dir + 1) % 4
+		}
+
+		if obstacle {
+			obstacles = append(obstacles, currentPos.Copy())
 		}
 
 		switch dir {
 		case up:
 			{
-				y--
+				currentPos.DecY()
 			}
 		case down:
 			{
-				y++
+				currentPos.IncY()
 			}
 		case left:
 			{
-				x--
+				currentPos.DecX()
 			}
 		case right:
 			{
-				x++
+				currentPos.IncX()
 			}
 		}
 
 	}
 
-	return touched
+	return path, false
+}
+
+func Solve1(input Input) int {
+	path, _ := simulate(input)
+
+	return len(path)
 }
 
 func Solve2(input Input) int {
-	return 0
+	path, _ := simulate(Input{
+		Grid:   input.Grid.Copy(),
+		StartX: input.StartX,
+		StartY: input.StartY,
+	})
+
+	loops := 0
+
+	for _, pos := range path {
+		grid := input.Grid.Copy()
+		grid.Data[pos.Y()][pos.X()] = '#'
+
+		_, loop := simulate(Input{
+			Grid:   grid,
+			StartX: input.StartX,
+			StartY: input.StartY,
+		})
+
+		if loop {
+			loops++
+		}
+	}
+
+	return loops
 }
