@@ -1,7 +1,7 @@
 package day6
 
 import (
-	"github.com/xscanpix/adventofcode2024/internal/utils"
+	"github.com/xscanpix/adventofcode2024/internal/pair"
 )
 
 const (
@@ -11,7 +11,7 @@ const (
 	left  = 3
 )
 
-func nextByte(grid Grid, pos utils.Pair, dir int) byte {
+func nextByte(grid Grid, pos pair.Pair, dir int) byte {
 	switch dir {
 	case up:
 		{
@@ -34,18 +34,18 @@ func nextByte(grid Grid, pos utils.Pair, dir int) byte {
 	panic("unreachable")
 }
 
-func isNextObstacle(grid Grid, pos utils.Pair, dir int) bool {
+func isNextObstacle(grid Grid, pos pair.Pair, dir int) bool {
 	nextByte := nextByte(grid, pos, dir)
 
 	return nextByte == '#'
 
 }
 
-func simulate(input Input) ([]utils.Pair, bool) {
-	path := []utils.Pair{}
-	obstacles := []utils.Pair{}
+func simulate(input Input) ([]pair.Pair, bool) {
+	path := []pair.Pair{}
+	obstacles := []pair.Pair{}
 
-	currentPos := utils.NewPair(input.StartX, input.StartY)
+	currentPos := pair.NewPair(input.StartX, input.StartY)
 
 	dir := up
 
