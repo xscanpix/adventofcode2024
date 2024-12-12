@@ -27,7 +27,7 @@ func nextPairs(p pair.Pair, width, height int) []pair.Pair {
 	return res
 }
 
-func dfsVisit(input Input, vertex pair.Pair, altitude int, trailheads map[int]pair.Pair) {
+func dfsVisit(input Input, vertex pair.Pair, altitude int, trailheads map[int]int) {
 	adjacentList := nextPairs(vertex, input.Width, input.Height)
 
 	for _, adjacent := range adjacentList {
@@ -36,7 +36,7 @@ func dfsVisit(input Input, vertex pair.Pair, altitude int, trailheads map[int]pa
 			dfsVisit(input, adjacent, adjacentAltitude, trailheads)
 
 			if adjacentAltitude == 0 {
-				trailheads[adjacent.Hash()] = adjacent
+				trailheads[adjacent.Hash()]++
 			}
 		} else {
 			continue
@@ -48,7 +48,7 @@ func Solve1(input Input) int {
 	trailheadsCount := 0
 
 	for _, start := range input.Start {
-		trailheads := make(map[int]pair.Pair)
+		trailheads := make(map[int]int)
 		dfsVisit(input, start, 9, trailheads)
 		trailheadsCount += len(trailheads)
 	}
@@ -57,5 +57,16 @@ func Solve1(input Input) int {
 }
 
 func Solve2(input Input) int {
-	return 0
+	trailheadsCount := 0
+
+	for _, start := range input.Start {
+		trailheads := make(map[int]int)
+		dfsVisit(input, start, 9, trailheads)
+
+		for _, count := range trailheads {
+			trailheadsCount += count
+		}
+	}
+
+	return trailheadsCount
 }
