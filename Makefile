@@ -50,3 +50,7 @@ day10:
 day11:
 	@cd ./cmd/day11 && go run .
 .PHONY: day11
+
+day12:
+	@cd ./cmd/day12 && go run .
+.PHONY: day12
