@@ -9,7 +9,8 @@ import (
 )
 
 type Input struct {
-	Numbers *list.List
+	StonesList *list.List
+	StonesMap  map[int]int
 }
 
 type Element struct {
@@ -23,17 +24,21 @@ func ReadInputFromFile(filename string) Input {
 		log.Fatalf(`Error reading '%s'. Make sure it exists.`, filename)
 	}
 
-	numbers := list.New()
+	stonesList := list.New()
+	stonesMap := make(map[int]int)
+
 	split := strings.Split(string(data), " ")
 
 	for _, s := range split {
 		num, _ := strconv.Atoi(s)
-		numbers.PushBack(Element{
-			Value: num,
+		stonesList.PushBack(Element{
+			Value: int(num),
 		})
+		stonesMap[int(num)] = 1
 	}
 
 	return Input{
-		Numbers: numbers,
+		StonesList: stonesList,
+		StonesMap:  stonesMap,
 	}
 }
