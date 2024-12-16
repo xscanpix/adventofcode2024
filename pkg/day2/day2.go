@@ -1,8 +1,6 @@
 package day2
 
-import (
-	"github.com/xscanpix/adventofcode2024/internal/utils"
-)
+import "github.com/xscanpix/adventofcode2024/internal/mathutils"
 
 type pair struct {
 	indexA int
@@ -10,7 +8,7 @@ type pair struct {
 }
 
 func is_level_change_safe(report *[]int, pair *pair) bool {
-	abs_diff := utils.IntAbs((*report)[pair.indexA] - (*report)[pair.indexB])
+	abs_diff := mathutils.IntAbs((*report)[pair.indexA] - (*report)[pair.indexB])
 
 	if abs_diff >= 1 && abs_diff <= 3 {
 		return true

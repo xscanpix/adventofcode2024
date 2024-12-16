@@ -72,6 +72,14 @@ func (p *Pair) Y() int {
 	return p.values[1]
 }
 
+func (p *Pair) SetX(value int) {
+	p.values[0] = value
+}
+
+func (p *Pair) SetY(value int) {
+	p.values[1] = value
+}
+
 func (p *Pair) IncX() int {
 	p.values[0]++
 
