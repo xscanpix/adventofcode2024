@@ -61,5 +61,41 @@ func Solve1(input Input) int {
 }
 
 func Solve2(input Input) int {
-	return 0
+	sum := 0
+	add := 10000000000000
+
+	for _, machine := range input.Machines {
+		buttonAX := machine.Buttons[0].X()
+		buttonBX := machine.Buttons[1].X()
+		prizeX := machine.Prize.X() + add
+
+		gcd_abx := mathutils.GCD(buttonAX, buttonBX)
+
+		if prizeX%gcd_abx != 0 {
+			continue
+		}
+
+		buttonAY := machine.Buttons[0].Y()
+		buttonBY := machine.Buttons[1].Y()
+		prizeY := machine.Prize.Y() + add
+
+		gcd_aby := mathutils.GCD(buttonAY, buttonBY)
+
+		if prizeY%gcd_aby != 0 {
+			continue
+		}
+
+		a, b, c, d, e, f := buttonAX, buttonAY, buttonBX, buttonBY, prizeX, prizeY
+
+		x := (c*f - d*e) / (b*c - a*d)
+		y := (e - a*x) / c
+
+		if x*a+y*c != e || x*b+y*d != f {
+			continue
+		}
+
+		sum += int(x*3 + y)
+	}
+
+	return sum
 }
