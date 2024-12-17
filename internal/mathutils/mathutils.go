@@ -14,3 +14,7 @@ func GCD(a, b int) int {
 		return GCD(b, a%b)
 	}
 }
+
+func Mod(a, b int) int {
+	return (a%b + b) % b
+}
